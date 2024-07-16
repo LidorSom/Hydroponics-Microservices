@@ -6,10 +6,10 @@ import Dashboard from './components/Dashboard';
 const App: React.FC = () => {
   return (
     <Router>
-      <Switch>
-        <Route exact path="/" component={Login} />
-        <Route path="/dashboard" component={Dashboard} />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
     </Router>
   );
 };
