@@ -6,5 +6,7 @@ namespace HydroponicsService.Services
     {
         Task<SensorData> GetLatestSensorDataAsync();
         Task SaveSensorDataAsync(SensorData sensorData);
+        Task<SensorData> GetSensorDataByTimestampAsync(DateTime timestamp);
+        Task<IEnumerable<SensorData>> GetSensorDataByTimeRangeAsync(DateTime startTime, DateTime endTime);
     }
 }

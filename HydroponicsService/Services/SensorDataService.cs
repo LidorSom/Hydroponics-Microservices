@@ -14,7 +14,6 @@ namespace HydroponicsService.Services
 
         public async Task<SensorData> GetLatestSensorDataAsync()
         {
-            // TODO: Implement logic to fetch the latest sensor data from MongoDB
             return await _sensorDataCollection
                 .Find(_ => true)
                 .SortByDescending(s => s.Timestamp)
@@ -23,9 +22,23 @@ namespace HydroponicsService.Services
 
         public async Task SaveSensorDataAsync(SensorData sensorData)
         {
-            // TODO: Implement logic to save sensor data to MongoDB
             sensorData.Timestamp = DateTime.UtcNow;
             await _sensorDataCollection.InsertOneAsync(sensorData);
+        }
+
+        public async Task<SensorData> GetSensorDataByTimestampAsync(DateTime timestamp)
+        {
+            return await _sensorDataCollection
+                .Find(s => s.Timestamp == timestamp)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<SensorData>> GetSensorDataByTimeRangeAsync(DateTime startTime, DateTime endTime)
+        {
+            return await _sensorDataCollection
+                .Find(s => s.Timestamp >= startTime && s.Timestamp <= endTime)
+                .SortBy(s => s.Timestamp)
+                .ToListAsync();
         }
     }
 }
