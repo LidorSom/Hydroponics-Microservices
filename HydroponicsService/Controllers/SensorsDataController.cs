@@ -22,26 +22,47 @@ namespace HydroponicsService.Controllers
         [HttpGet("latest")]
         public async Task<ActionResult<SensorData>> GetLatestSensorData()
         {
-            var sensorData = await _sensorDataService.GetLatestSensorsDataAsync();
-            return Ok(sensorData);
+            try
+            {
+                var sensorData = await _sensorDataService.GetLatestSensorsDataAsync();
+                return Ok(sensorData);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while fetching the latest sensor data: {ex.Message}");
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> SaveSensorData([FromBody] SensorData sensorData)
         {
-            await _sensorDataService.SaveSensorsDataAsync(sensorData);
-            return Ok();
+            try
+            {
+                await _sensorDataService.SaveSensorsDataAsync(sensorData);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while saving sensor data: {ex.Message}");
+            }
         }
 
         [HttpGet("by-timestamp")]
         public async Task<ActionResult<SensorData>> GetSensorDataByTimestamp([FromQuery] DateTime timestamp)
         {
-            var sensorData = await _sensorDataService.GetSensorsDataByTimestampAsync(timestamp);
-            if (sensorData == null)
+            try
             {
-                return NotFound();
+                var sensorData = await _sensorDataService.GetSensorsDataByTimestampAsync(timestamp);
+                if (sensorData == null)
+                {
+                    return NotFound();
+                }
+                return Ok(sensorData);
             }
-            return Ok(sensorData);
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while fetching sensor data by timestamp: {ex.Message}");
+            }
         }
 
         [HttpGet("by-timerange")]
@@ -50,12 +71,23 @@ namespace HydroponicsService.Controllers
             [FromQuery] DateTime endTime,
             CancellationToken cancellationToken)
         {
-            var sensorDataList = new List<SensorData>();
-            await foreach (var sensorData in _sensorDataService.GetSensorsDataByTimeRangeAsync(startTime, endTime, cancellationToken))
+            try
             {
-                sensorDataList.Add(sensorData);
+                var sensorDataList = new List<SensorData>();
+                await foreach (var sensorData in _sensorDataService.GetSensorsDataByTimeRangeAsync(startTime, endTime, cancellationToken))
+                {
+                    sensorDataList.Add(sensorData);
+                }
+                return Ok(sensorDataList);
             }
-            return Ok(sensorDataList);
+            catch (OperationCanceledException)
+            {
+                return StatusCode(499, "The request was canceled");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while fetching sensor data by time range: {ex.Message}");
+            }
         }
     }
 }
