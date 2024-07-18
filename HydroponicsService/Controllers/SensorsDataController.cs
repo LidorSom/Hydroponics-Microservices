@@ -39,7 +39,7 @@ namespace HydroponicsService.Controllers
             try
             {
                 await _sensorDataService.SaveSensorsDataAsync(sensorData);
-                return Ok();
+                return CreatedAtAction(nameof(SaveSensorData), new { id = sensorData.Id }, sensorData);
             }
             catch (Exception ex)
             {
@@ -61,7 +61,7 @@ namespace HydroponicsService.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An error occurred while fetching sensor data by timestamp: {ex.Message}");
+                return Problem($"An error occurred while fetching sensor data by timestamp: {ex.Message}");
             }
         }
 
@@ -82,11 +82,11 @@ namespace HydroponicsService.Controllers
             }
             catch (OperationCanceledException)
             {
-                return StatusCode(499, "The request was canceled");
+                return Problem("The request was canceled", statusCode: 499);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An error occurred while fetching sensor data by time range: {ex.Message}");
+                return Problem($"An error occurred while fetching sensor data by time range: {ex.Message}");
             }
         }
     }
