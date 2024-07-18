@@ -15,6 +15,9 @@ Log.Logger = new LoggerConfiguration()
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add configuration
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
 // Add Serilog to the application
 builder.Logging.AddSerilog();
 // Add services to the container.
