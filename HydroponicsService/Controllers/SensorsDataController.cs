@@ -67,19 +67,15 @@ namespace HydroponicsService.Controllers
         }
 
         [HttpGet("by-timerange")]
-        public async Task<ActionResult<IEnumerable<SensorData>>> GetSensorDataByTimeRange(
+        public ActionResult<IAsyncEnumerable<SensorData>> GetSensorDataByTimeRange(
             [FromQuery][Required] DateTime startTime,
             [FromQuery][Required] DateTime endTime,
             CancellationToken cancellationToken)
         {
             try
             {
-                var sensorDataList = new List<SensorData>();
-                await foreach (var sensorData in _sensorDataService.GetSensorsDataByTimeRangeAsync(startTime, endTime, cancellationToken))
-                {
-                    sensorDataList.Add(sensorData);
-                }
-                return Ok(sensorDataList);
+                var sensorDataStream = _sensorDataService.GetSensorsDataByTimeRangeAsync(startTime, endTime, cancellationToken);
+                return Ok(sensorDataStream);
             }
             catch (OperationCanceledException)
             {
