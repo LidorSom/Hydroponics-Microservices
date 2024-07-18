@@ -1,5 +1,7 @@
 using HydroponicsService.Services;
+
 using MongoDB.Driver;
+
 using Serilog;
 using Serilog.Events;
 
@@ -14,8 +16,7 @@ Log.Logger = new LoggerConfiguration()
 var builder = WebApplication.CreateBuilder(args);
 
 // Add Serilog to the application
-builder.Host.UseSerilog();
-
+builder.Logging.AddSerilog();
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
