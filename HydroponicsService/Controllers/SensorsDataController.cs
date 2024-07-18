@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace HydroponicsService.Controllers
 {
@@ -34,7 +35,7 @@ namespace HydroponicsService.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SaveSensorData([FromBody] SensorData sensorData)
+        public async Task<IActionResult> SaveSensorData([FromBody][Required] SensorData sensorData)
         {
             try
             {
@@ -48,7 +49,7 @@ namespace HydroponicsService.Controllers
         }
 
         [HttpGet("by-timestamp")]
-        public async Task<ActionResult<SensorData>> GetSensorDataByTimestamp([FromQuery] DateTime timestamp)
+        public async Task<ActionResult<SensorData>> GetSensorDataByTimestamp([FromQuery][Required] DateTime timestamp)
         {
             try
             {
@@ -67,8 +68,8 @@ namespace HydroponicsService.Controllers
 
         [HttpGet("by-timerange")]
         public async Task<ActionResult<IEnumerable<SensorData>>> GetSensorDataByTimeRange(
-            [FromQuery] DateTime startTime,
-            [FromQuery] DateTime endTime,
+            [FromQuery][Required] DateTime startTime,
+            [FromQuery][Required] DateTime endTime,
             CancellationToken cancellationToken)
         {
             try
