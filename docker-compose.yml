@@ -4,7 +4,7 @@ services:
   hydroponics-service:
     build: .
     ports:
-      - "8080:80"
+      - "8080:8080"
     environment:
       - MONGODB_CONNECTION_STRING=mongodb://mongodb:27017/hydroponics
     depends_on:

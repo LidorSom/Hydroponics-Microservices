@@ -1,17 +1,17 @@
 # Use the official .NET SDK image as a build environment
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /app
 
 # Copy csproj and restore dependencies
-COPY HydroponicsService/*.csproj ./
+COPY WriteDataService/*.csproj ./
 RUN dotnet restore
 
 # Copy the rest of the files and build
-COPY HydroponicsService/. ./
+COPY WriteDataService/. ./
 RUN dotnet publish -c Release -o out
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:7.0
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 COPY --from=build-env /app/out .
 
@@ -19,4 +19,4 @@ COPY --from=build-env /app/out .
 EXPOSE 80
 
 # Set the entry point
-ENTRYPOINT ["dotnet", "HydroponicsService.dll"]
+ENTRYPOINT ["dotnet", "WriteDataService.dll"]

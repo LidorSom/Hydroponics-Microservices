@@ -1,0 +1,15 @@
+2024-07-22 19:47:12.587 +03:00 [INF] Now listening on: http://localhost:5000
+2024-07-22 19:47:12.676 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-07-22 19:47:12.680 +03:00 [INF] Hosting environment: Production
+2024-07-22 19:47:12.683 +03:00 [INF] Content root path: C:\Users\lidor\Desktop\Hydroponics-Microservices\WriteDataService
+2024-07-22 19:47:36.457 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/ - null null
+2024-07-22 19:47:36.508 +03:00 [WRN] Failed to determine the https port for redirect.
+2024-07-22 19:47:36.521 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/ - 404 0 null 66.0723ms
+2024-07-22 19:47:36.597 +03:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5000/, Response status code: 404
+2024-07-22 19:51:48.688 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/ - null null
+2024-07-22 19:51:48.695 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/ - 404 0 null 7.138ms
+2024-07-22 19:51:48.701 +03:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5000/, Response status code: 404
+2024-07-22 19:51:51.705 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/ - null null
+2024-07-22 19:51:51.714 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/ - 404 0 null 8.9449ms
+2024-07-22 19:51:51.722 +03:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5000/, Response status code: 404
+2024-07-22 19:52:07.985 +03:00 [INF] Application is shutting down...
