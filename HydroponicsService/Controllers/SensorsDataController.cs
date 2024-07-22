@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Serilog;
+using ILogger = Serilog.ILogger;
 
 namespace HydroponicsService.Controllers
 {
@@ -64,11 +65,13 @@ namespace HydroponicsService.Controllers
             try
             {
                 var sensorData = await _sensorDataService.GetSensorsDataByTimestampAsync(timestamp);
+
                 if (sensorData == null)
                 {
                     _logger.Information("No sensor data found for timestamp: {Timestamp}", timestamp);
                     return NotFound();
                 }
+
                 _logger.Information("Sensor data fetched successfully for timestamp: {Timestamp}", timestamp);
                 return Ok(sensorData);
             }

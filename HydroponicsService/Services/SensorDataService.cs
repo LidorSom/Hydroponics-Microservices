@@ -1,4 +1,5 @@
 using HydroponicsService.Models;
+using System.Runtime.CompilerServices;
 using MongoDB.Driver;
 
 namespace HydroponicsService.Services
@@ -12,7 +13,7 @@ namespace HydroponicsService.Services
             _sensorDataCollection = database.GetCollection<SensorData>("SensorData");
         }
 
-        public async Task<SensorData> GetLatestSensorDataAsync()
+        public async Task<SensorData> GetLatestSensorsDataAsync()
         {
             return await _sensorDataCollection
                 .Find(_ => true)
@@ -20,25 +21,34 @@ namespace HydroponicsService.Services
                 .FirstOrDefaultAsync();
         }
 
-        public async Task SaveSensorDataAsync(SensorData sensorData)
+        public async Task SaveSensorsDataAsync(SensorData sensorData)
         {
             sensorData.Timestamp = DateTime.UtcNow;
             await _sensorDataCollection.InsertOneAsync(sensorData);
         }
 
-        public async Task<SensorData> GetSensorDataByTimestampAsync(DateTime timestamp)
+        public async Task<SensorData> GetSensorsDataByTimestampAsync(DateTime timestamp)
         {
             return await _sensorDataCollection
                 .Find(s => s.Timestamp == timestamp)
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<SensorData>> GetSensorDataByTimeRangeAsync(DateTime startTime, DateTime endTime)
+        public async IAsyncEnumerable<SensorData> GetSensorsDataByTimeRangeAsync(DateTime startTime, DateTime endTime, [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            return await _sensorDataCollection
+            using var cursor = await _sensorDataCollection
                 .Find(s => s.Timestamp >= startTime && s.Timestamp <= endTime)
                 .SortBy(s => s.Timestamp)
-                .ToListAsync();
+                .ToCursorAsync(cancellationToken);
+
+            while (await cursor.MoveNextAsync(cancellationToken))
+            {
+                foreach (var document in cursor.Current)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    yield return document;
+                }
+            }
         }
     }
 }
