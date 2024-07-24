@@ -6,9 +6,9 @@ namespace HydroponicsService.Models
     public class SensorData
     {
         [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public Guid Id { get; set; } = new Guid();
-
+        [BsonRepresentation(BsonType.Binary)]
+        [BsonGuidRepresentation(GuidRepresentation.Standard)]
+        public Guid Id { get; set; } = Guid.NewGuid();
         public double Ph { get; set; }
         public double Ec { get; set; }
         public double Temperature { get; set; }

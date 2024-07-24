@@ -12,7 +12,7 @@ using ILogger = Serilog.ILogger;
 namespace HydroponicsService.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/sensor-data")]
     public class SensorDataController : ControllerBase
     {
         private readonly ISensorDataService _sensorDataService;
@@ -65,13 +65,11 @@ namespace HydroponicsService.Controllers
             try
             {
                 var sensorData = await _sensorDataService.GetSensorsDataByTimestampAsync(timestamp);
-
                 if (sensorData == null)
                 {
                     _logger.Information("No sensor data found for timestamp: {Timestamp}", timestamp);
                     return NotFound();
                 }
-
                 _logger.Information("Sensor data fetched successfully for timestamp: {Timestamp}", timestamp);
                 return Ok(sensorData);
             }
