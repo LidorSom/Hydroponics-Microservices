@@ -9,6 +9,7 @@ class Program
         Console.WriteLine("Fake Raspberry Pi Sensor Simulation Started");
         
         var sensorSimulator = new SensorSimulator();
+        var sensorDataClient = new SensorDataClient("http://localhost:5000/api/sensordata"); // Adjust the URL as needed
         
         while (true)
         {
@@ -19,6 +20,8 @@ class Program
             Console.WriteLine($"Temperature: {sensorData.Temperature:F2}°C");
             Console.WriteLine($"Humidity: {sensorData.Humidity:F2}%");
             Console.WriteLine("--------------------");
+            
+            await sensorDataClient.SendSensorDataAsync(sensorData);
             
             // Simulate real-time data by waiting for 5 seconds
             await Task.Delay(5000);
