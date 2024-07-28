@@ -37,7 +37,7 @@ var database = mongoClient.GetDatabase("SensorsMeasurentsDB");
 builder.Services.AddSingleton(database);
 
 // Register services
-builder.Services.AddScoped<ISensorDataService, SensorDataService>();
+builder.Services.AddScoped<ISensorWriteDataService, SensorWriteDataService>();
 
 var app = builder.Build();
 
