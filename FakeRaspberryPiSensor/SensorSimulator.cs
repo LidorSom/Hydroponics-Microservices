@@ -11,7 +11,7 @@ public class SensorSimulator
         {
             Ph = GeneratePh(),
             Ec = GenerateEc(),
-            Temperature = GenerateTemperature(),
+            WaterTemperature = GenerateTemperature(),
             Humidity = GenerateHumidity(),
             Timestamp = DateTime.UtcNow
         };

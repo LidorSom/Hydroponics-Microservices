@@ -38,7 +38,7 @@ builder.Services.AddSingleton(database);
 
 // Register services
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
-builder.Services.AddScoped<ISensorWriteDataService, SensorWriteDataService>();
+builder.Services.AddScoped<ISensorsWriteDataService, SensorWriteDataService>();
 builder.Services.AddScoped<IMappingService, MappingService>();
 
 var app = builder.Build();

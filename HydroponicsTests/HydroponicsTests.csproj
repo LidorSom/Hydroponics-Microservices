@@ -24,8 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ReadDataService\ReadDataService.csproj" />
-    <ProjectReference Include="..\WriteDataService\WriteDataService.csproj" />
+    <ProjectReference Include="..\ReadDataService\ReadDataMicroservice.csproj" />
+    <ProjectReference Include="..\WriteDataService\WriteDataMicroservice.csproj" />
   </ItemGroup>
 
 </Project>

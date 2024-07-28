@@ -1,7 +1,7 @@
 using Xunit;
 using Moq;
-using WriteDataService.Controllers;
-using WriteDataService.Services;
+using WriteDataMicroservice.Controllers;
+using WriteDataMicroservice.Services;
 using Microsoft.Extensions.Logging;
 using SharedLibrary.Models;
 

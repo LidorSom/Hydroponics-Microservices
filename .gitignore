@@ -3,3 +3,8 @@ out
 out*
 WriteDataService/bin*
 WriteDataService/obj*
+WriteDataService/logs*
+*bin*
+*obj*
+.vs/
+env/
